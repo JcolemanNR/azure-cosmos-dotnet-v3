@@ -6,8 +6,10 @@ namespace CosmosBenchmark
 {
     using System;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
     using Microsoft.Azure.Cosmos;
+    using NewRelic.Api.Agent;
 
     internal class SerialOperationExecutor : IExecutor
     {
@@ -30,6 +32,8 @@ namespace CosmosBenchmark
 
         public double TotalRuCharges { get; private set; }
 
+        [Transaction]
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public async Task ExecuteAsync(
                 int iterationCount,
                 bool isWarmup,

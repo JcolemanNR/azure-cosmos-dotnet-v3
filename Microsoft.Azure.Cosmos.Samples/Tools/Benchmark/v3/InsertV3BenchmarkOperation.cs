@@ -7,8 +7,10 @@ namespace CosmosBenchmark
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
     using Microsoft.Azure.Cosmos;
+    using NewRelic.Api.Agent;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -37,6 +39,8 @@ namespace CosmosBenchmark
             this.sampleJObject = JsonHelper.Deserialize<Dictionary<string, object>>(sampleJson);
         }
 
+        [Transaction]
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public async Task<OperationResult> ExecuteOnceAsync()
         {
             using (MemoryStream input = JsonHelper.ToStream(this.sampleJObject))

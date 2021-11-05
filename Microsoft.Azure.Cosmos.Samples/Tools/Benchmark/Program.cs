@@ -28,6 +28,7 @@ namespace CosmosBenchmark
         /// <param name="args">command line arguments.</param>
         public static async Task Main(string[] args)
         {
+            NewRelic.Api.Agent.NewRelic.SetApplicationName("CosmosDB_Benchmark_testing");
             try
             {
                 BenchmarkConfig config = BenchmarkConfig.From(args);
